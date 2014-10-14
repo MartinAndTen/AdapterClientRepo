@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProductLib;
+using ProductAdapterLib;
 
 namespace AdapterTest
 {
@@ -20,6 +21,22 @@ namespace AdapterTest
             Assert.AreEqual(expectedCode, product.Code);
             Assert.AreEqual(expectedPrice, product.Price);
             Assert.AreEqual(expectedProductName, product.ProductName);
+        }
+
+        [TestMethod]
+        public void TestIfExternalProductReturnsCorrectValues()
+        {
+            //Arrange
+            var extProduct = new ExternalProduct();
+            extProduct.Title = "ktm";
+            extProduct.Price = 100;
+            extProduct.EANCode = "12345";
+            //Act
+            IProduct product = new ExternalProductAdapterLib(extProduct);
+            //Assert
+            Assert.AreEqual(extProduct.Title, product.ProductName);
+            Assert.AreEqual(extProduct.EANCode, product.Code);
+            Assert.AreEqual(extProduct.Price, product.Price);
         }
     }
 }
